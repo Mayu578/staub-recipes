@@ -114,10 +114,21 @@ function Home({ recipes, loading, notice, cat, setCat, q, setQ, pickFile }) {
 }
 
 function Detail({ r }) {
-  useEffect(() => window.scrollTo(0, 0), [])
+  useEffect(() => { window.scrollTo(0, 0) }, [])
   return (
     <>
-      <a className="back" href="#">← 一覧へ</a>
+      <a
+        className="back"
+        href="#"
+        onClick={(e) => {
+          e.preventDefault()
+          location.hash = ''
+          history.replaceState(null, '', location.pathname + location.search)
+          window.dispatchEvent(new HashChangeEvent('hashchange'))
+        }}
+      >
+        ← 一覧へ
+      </a>
       {r.img && <img className="hero" src={r.img} alt="" />}
       <h2 className="name">{r.name}</h2>
       <div className="meta">{metaOf(r).map((x) => <span key={x}>{x}</span>)}</div>
